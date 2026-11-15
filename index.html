@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Examen de tiempos verbales</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: una sola columna de lectura; cada tiempo verbal es un bloque con ejercicio de escritura, preguntas e identificación. */
+:root{
+  --bg:#f4f6fb; --card:#ffffff; --fg:#18202f; --muted:#5a6578; --line:#d9deea;
+  --accent:#2b4acb; --accent-soft:#e6ebff; --ok:#1a7f4b; --ok-soft:#dff4e8; --bad:#b42336; --bad-soft:#fbe4e7;
+  --task-bg:#eef1f9;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif; --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10141d; --card:#181e2b; --fg:#e8ecf5; --muted:#9aa5ba; --line:#2b3446;
+  --accent:#8ea2ff; --accent-soft:#222c52; --ok:#5fd694; --ok-soft:#173a2a; --bad:#ff8a99; --bad-soft:#40202a; --task-bg:#1b2232; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#10141d; --card:#181e2b; --fg:#e8ecf5; --muted:#9aa5ba; --line:#2b3446;
+  --accent:#8ea2ff; --accent-soft:#222c52; --ok:#5fd694; --ok-soft:#173a2a; --bad:#ff8a99; --bad-soft:#40202a; --task-bg:#1b2232; color-scheme:dark;}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.55;
+  padding-block:0 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+.wrap{max-width:760px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.top-in{max-width:760px;margin:0 auto;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.top-in b{font-size:14px}
+.stats{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;flex:1 1 140px;min-width:120px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,6vw,40px);line-height:1.15;margin:32px 0 8px;text-wrap:balance}
+.lead{color:var(--muted);margin:0 0 8px;max-width:62ch}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px}
+nav.toc a{font-size:13px;text-decoration:none;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:999px;font-weight:500}
+section.blk{margin-top:44px;scroll-margin-top:70px}
+.blk h2{font-family:var(--serif);font-size:26px;font-weight:600;margin:0 0 4px;text-wrap:balance}
+.blk .sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+.task{background:var(--task-bg);border-radius:10px;padding:18px 20px;margin-bottom:22px}
+.task h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;font-weight:600}
+.task .cons{font-family:var(--serif);font-size:19px;line-height:1.5;margin:0 0 12px;max-width:62ch}
+.task .cons b{color:var(--accent);font-weight:600}
+.task .help{font-size:14px;color:var(--muted);margin:0 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.chips span{font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+.task textarea{display:block;width:100%;min-height:200px;resize:vertical;font:inherit;font-family:var(--serif);font-size:18px;line-height:1.6;
+  background:var(--card);color:var(--fg);border:1.5px solid var(--line);border-radius:8px;padding:12px 14px}
+.task textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:10px}
+.count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.count .okc{color:var(--ok);font-weight:600}
+button.copy{font:inherit;font-size:14px;font-weight:600;background:var(--card);color:var(--accent);border:1.5px solid var(--accent);border-radius:8px;padding:6px 14px;cursor:pointer}
+button.copy:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.task .note{font-size:13px;color:var(--muted);margin:12px 0 0}
+.pic{display:flex;justify-content:center;margin:0 0 14px}
+.pic svg{width:100%;max-width:260px;height:auto;border-radius:10px;border:1px solid var(--line)}
+.pic svg .s{fill:var(--accent-soft)} .pic svg .a{fill:var(--accent)} .pic svg .f{fill:var(--fg)} .pic svg .t{fill:var(--card)} .pic svg .g{fill:var(--ok)}
+.pic svg .c{fill:var(--card);stroke:var(--fg);stroke-width:3;stroke-linejoin:round}
+.pic svg .st{fill:none;stroke:var(--fg);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:14px}
+.q .meta{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);margin-bottom:6px;font-variant-numeric:tabular-nums}
+.q .tag{background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:999px;font-weight:600}
+.q .tag.id{background:var(--ok-soft);color:var(--ok)}
+.q p.pr{margin:0 0 12px;font-weight:500;font-size:17px}
+.opts{display:grid;gap:8px}
+.opt{font:inherit;text-align:left;background:var(--bg);color:var(--fg);border:1.5px solid var(--line);border-radius:8px;padding:10px 14px;cursor:pointer;min-width:0;overflow-wrap:anywhere}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.opt:disabled{cursor:default}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--fg)}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--fg)}
+.fb{margin-top:10px;font-size:14px;color:var(--muted)}
+.fb strong{color:var(--ok)} .fb.no strong{color:var(--bad)}
+.result{margin-top:48px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;text-align:center}
+.result .big{font-family:var(--serif);font-size:52px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.result p{color:var(--muted);margin:8px 0 16px}
+button.reset{font:inherit;font-weight:600;background:var(--accent);color:var(--card);border:0;border-radius:8px;padding:10px 20px;cursor:pointer}
+button.reset:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.who{margin:20px 0 8px;display:grid;gap:6px;max-width:420px}
+.who label{font-size:13px;font-weight:600;color:var(--muted)}
+.who input{font:inherit;background:var(--card);color:var(--fg);border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.who input:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+.rules{font-size:14px;color:var(--muted);background:var(--accent-soft);border-radius:8px;padding:10px 14px;margin:10px 0;max-width:62ch}
+.verdict{display:inline-block;font-weight:700;letter-spacing:.06em;padding:4px 16px;border-radius:999px;margin-top:10px}
+.verdict.pass,.vd.pass{background:var(--ok-soft);color:var(--ok)}
+.verdict.fail,.vd.fail{background:var(--bad-soft);color:var(--bad)}
+.rev{text-align:left;margin:0 0 18px}
+.rev h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.rev p{font-size:14px;margin:0 0 10px;color:var(--fg)}
+.acts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+a.copy{text-decoration:none;display:inline-block}
+.result .note{font-size:13px;color:var(--muted);margin:14px 0 0}
+#repbox{display:block;width:100%;min-height:160px;margin-top:14px;font:13px/1.4 ui-monospace,Menlo,monospace;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px}
+.teacher{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.teacher h2{font-family:var(--serif);font-size:22px;margin:0 0 4px}
+.sub-item{border-top:1px solid var(--line);padding:8px 0}
+.sub-item summary{display:flex;flex-wrap:wrap;gap:10px;align-items:center;cursor:pointer;font-weight:600}
+.sub-item .pt{font-variant-numeric:tabular-nums;color:var(--muted)}
+.vd{font-size:12px;padding:2px 10px;border-radius:999px}
+.sub-item .meta2{font-size:13px;color:var(--muted);margin:8px 0}
+.ans div{font-size:14px;padding:6px 10px;border-radius:6px;margin:6px 0;overflow-wrap:anywhere}
+.ans .ok{background:var(--ok-soft)} .ans .bad{background:var(--bad-soft)}
+.txt{white-space:pre-wrap;font-family:var(--serif);font-size:16px;background:var(--bg);border-radius:8px;padding:10px 12px;margin:4px 0 12px;overflow-wrap:anywhere}
+.bd{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 18px}
+.bd span{font-size:13px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-variant-numeric:tabular-nums}
+</style>
+
+<header class="top"><div class="top-in">
+  <b>Examen de tiempos verbales</b>
+  <div class="bar" aria-hidden="true"><i id="pbar"></i></div>
+  <span class="stats" id="stats">0 / 0 respondidas</span>
+</div></header>
+
+<div class="wrap">
+  <h1>Examen de tiempos verbales en español</h1>
+  <p class="lead">Cinco bloques: presente de indicativo, presente progresivo, pretérito indefinido, futuro simple y otras formas de futuro. En cada bloque escribes una historia corta con el tiempo verbal y el tema que se te asigna, respondes preguntas con verbos regulares e irregulares y terminas identificando el tiempo de una oración.</p>
+  <div class="who"><label for="alumno">Nombre del alumno</label><input id="alumno" type="text" autocomplete="name" placeholder="Nombre y apellido"></div>
+  <div class="rules">Calificación de 0 a 100 puntos. Se aprueba con 70 puntos o más. Las preguntas de opción múltiple forman la nota. Las historias las revisa el profesor.</div>
+  <section id="teacher" class="teacher" hidden>
+    <h2>Panel del profesor</h2>
+    <p class="sub" id="tsum">Cargando entregas…</p>
+    <div id="tlist"></div>
+  </section>
+  <nav class="toc" id="toc" aria-label="Bloques"></nav>
+  <main id="root"></main>
+  <div class="result" id="result" hidden>
+    <div class="big" id="score"></div>
+    <div class="verdict" id="verdict"></div>
+    <p id="scoremsg"></p>
+    <div class="bd" id="bd"></div>
+    <div class="rev" id="rev"></div>
+    <div class="acts">
+      <button class="reset" id="send" type="button" hidden>Enviar resultado al profesor</button>
+      <a class="copy" id="wa" href="https://wa.me/" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+      <button class="copy" id="copyrep" type="button">Copiar informe completo</button>
+      <button class="copy" id="dl" type="button" hidden>Descargar informe</button>
+      <button class="copy" id="reset" type="button">Repetir las preguntas</button>
+    </div>
+    <p class="note" id="sendmsg" role="status">Para que tu profesor vea tus aciertos y errores, envíale el informe por WhatsApp, por correo o por el medio que él indique.</p>
+    <textarea id="repbox" hidden readonly aria-label="Informe completo"></textarea>
+  </div>
+</div>
+
+<script>
+function P(label,body){return '<svg viewBox="0 0 280 170" role="img" aria-label="'+label+'"><rect width="280" height="170" class="s"/>'+body+'</svg>'}
+var IMG={
+presente:P('Un panadero con pan recién hecho y un reloj',
+ '<circle cx="50" cy="45" r="18" class="a"/>'+
+ '<circle cx="228" cy="55" r="24" class="c"/><path class="st" d="M228 55V40M228 55L238 61"/>'+
+ '<rect x="115" y="98" width="50" height="52" rx="10" class="c"/>'+
+ '<rect x="122" y="42" width="36" height="16" class="c"/><circle cx="128" cy="40" r="9" class="c"/><circle cx="140" cy="35" r="10" class="c"/><circle cx="152" cy="40" r="9" class="c"/>'+
+ '<circle cx="140" cy="76" r="20" class="c"/><circle cx="132" cy="73" r="2.5" class="f"/><circle cx="148" cy="73" r="2.5" class="f"/><path class="st" d="M132 83Q140 90 148 83"/>'+
+ '<ellipse cx="62" cy="140" rx="30" ry="14" class="a"/><path class="st" d="M48 136L56 128M62 138L70 130M76 136L82 130"/>'+
+ '<ellipse cx="218" cy="140" rx="30" ry="14" class="a"/><path class="st" d="M204 136L212 128M218 138L226 130M232 136L238 130"/>'),
+progresivo:P('Un perro y un gato jugando con una pelota',
+ '<ellipse cx="50" cy="82" rx="10" ry="22" class="a"/><ellipse cx="110" cy="82" rx="10" ry="22" class="a"/>'+
+ '<circle cx="80" cy="95" r="32" class="c"/><circle cx="68" cy="90" r="3.5" class="f"/><circle cx="92" cy="90" r="3.5" class="f"/>'+
+ '<ellipse cx="80" cy="106" rx="7" ry="5" class="f"/><path class="st" d="M80 111V117M70 119Q80 126 90 119"/>'+
+ '<polygon points="176,78 180,46 199,68" class="c"/><polygon points="224,78 220,46 201,68" class="c"/>'+
+ '<circle cx="200" cy="98" r="30" class="c"/><circle cx="190" cy="94" r="3.5" class="f"/><circle cx="210" cy="94" r="3.5" class="f"/>'+
+ '<path class="st" d="M196 104L200 108L204 104M200 108V112M172 104L186 106M172 112L186 110M228 104L214 106M228 112L214 110"/>'+
+ '<circle cx="140" cy="146" r="12" class="a"/><path class="st" d="M131 141Q140 147 149 141"/>'),
+indefinido:P('Una maleta en la playa con el sol y el mar',
+ '<circle cx="228" cy="42" r="20" class="a"/>'+
+ '<rect x="0" y="118" width="280" height="52" class="a" opacity="0.35"/>'+
+ '<path class="st" d="M20 132Q35 124 50 132T80 132T110 132M190 150Q205 142 220 150T250 150"/>'+
+ '<rect x="95" y="80" width="90" height="62" rx="9" class="c"/><path class="st" d="M125 80V66H155V80M95 104H185"/>'+
+ '<rect x="132" y="98" width="16" height="12" rx="2" class="a"/>'),
+futuro:P('Una ciudad del futuro en el año 2050',
+ '<text x="16" y="30" class="f" font-family="sans-serif" font-size="18" font-weight="700">2050</text>'+
+ '<circle cx="236" cy="36" r="14" class="a"/><path class="st" d="M214 40Q236 28 258 32"/>'+
+ '<rect x="28" y="92" width="36" height="62" class="c"/><rect x="74" y="62" width="34" height="92" class="c"/><rect x="118" y="82" width="30" height="72" class="c"/><rect x="158" y="44" width="40" height="110" class="c"/><rect x="208" y="76" width="40" height="78" class="c"/>'+
+ '<rect x="36" y="102" width="8" height="8" class="a"/><rect x="48" y="102" width="8" height="8" class="a"/><rect x="82" y="72" width="8" height="8" class="a"/><rect x="94" y="72" width="8" height="8" class="a"/><rect x="82" y="90" width="8" height="8" class="a"/><rect x="166" y="54" width="10" height="8" class="a"/><rect x="182" y="54" width="10" height="8" class="a"/><rect x="166" y="72" width="10" height="8" class="a"/><rect x="216" y="86" width="8" height="8" class="a"/><rect x="230" y="86" width="8" height="8" class="a"/>'),
+otras:P('Un calendario con los planes del fin de semana',
+ '<rect x="80" y="26" width="120" height="120" rx="10" class="c"/><path d="M80 36a10 10 0 0 1 10-10h100a10 10 0 0 1 10 10v22H80z" class="a"/>'+
+ '<text x="140" y="49" text-anchor="middle" class="t" font-family="sans-serif" font-size="15" font-weight="700">MAÑANA</text>'+
+ '<path class="st" d="M98 20V32M182 20V32M98 80H182M98 100H168M98 120H152"/>'+
+ '<path class="st" d="M172 112L180 120L192 106"/>')
+};
+var QIMG={
+"Ahora mismo yo ___ (trabajar).":P('Una persona trabajando en una computadora',
+ '<circle cx="110" cy="52" r="20" class="c"/><circle cx="103" cy="50" r="2.5" class="f"/><circle cx="117" cy="50" r="2.5" class="f"/><path class="st" d="M104 60Q110 65 116 60"/>'+
+ '<rect x="86" y="75" width="48" height="50" rx="10" class="c"/>'+
+ '<rect x="146" y="88" width="64" height="36" rx="4" class="c"/><rect x="136" y="124" width="84" height="6" rx="3" class="a"/>'+
+ '<rect x="30" y="130" width="220" height="12" rx="3" class="a"/>'),
+"Mis padres están ___ (dormir) en este momento.":P('Una persona durmiendo en una cama',
+ '<rect x="30" y="100" width="220" height="38" rx="6" class="c"/>'+
+ '<rect x="40" y="82" width="50" height="22" rx="10" class="c"/><circle cx="66" cy="86" r="15" class="c"/><path class="st" d="M59 86Q63 90 67 86"/>'+
+ '<rect x="86" y="84" width="150" height="40" rx="14" class="a"/>'+
+ '<text x="170" y="60" class="f" font-family="sans-serif" font-size="22" font-weight="700">Z</text><text x="192" y="42" class="f" font-family="sans-serif" font-size="17" font-weight="700">z</text><text x="208" y="28" class="f" font-family="sans-serif" font-size="13" font-weight="700">z</text>'),
+"Tú estás ___ (leer) un libro interesante.":P('Una persona leyendo un libro',
+ '<circle cx="140" cy="48" r="20" class="c"/><circle cx="133" cy="46" r="2.5" class="f"/><circle cx="147" cy="46" r="2.5" class="f"/>'+
+ '<rect x="108" y="72" width="64" height="62" rx="12" class="c"/>'+
+ '<path class="a" d="M112 96H140V132H112z"/><path class="a" d="M140 96H168V132H140z" opacity="0.7"/><path class="st" d="M140 96V132M112 96H168V132H112z"/>'),
+"Completa: Mañana ___ al médico.":P('Un calendario con una cruz de médico',
+ '<rect x="80" y="22" width="120" height="124" rx="10" class="c"/><path d="M80 32a10 10 0 0 1 10-10h100a10 10 0 0 1 10 10v22H80z" class="a"/>'+
+ '<text x="140" y="45" text-anchor="middle" class="t" font-family="sans-serif" font-size="15" font-weight="700">MAÑANA</text>'+
+ '<rect x="130" y="70" width="20" height="56" rx="3" class="g"/><rect x="112" y="88" width="56" height="20" rx="3" class="g"/>')
+};
+var S=[
+{id:"presente",title:"1. Presente de indicativo",sub:"Acciones habituales y hechos actuales.",
+ task:{tense:"presente de indicativo",topic:"la rutina diaria de un panadero",verbs:["levantarse","preparar","tener","hacer","salir","venir","poder","querer","dormir","ir"]},
+ qs:[
+ ["Yo ___ (comer) pan todos los días.",["como","comí","comeré","estoy comiendo"],0,"Es una acción habitual: presente de indicativo, 1.ª persona de -er → como.","Regular"],
+ ["Ella ___ (pensar) mucho en su familia.",["pensa","pienso","piensa","pensó"],2,"Pensar cambia e→ie en yo, tú, él/ella y ellos: ella piensa.","Irregular e→ie"],
+ ["Yo ___ (tener) dos hermanos.",["teno","tengo","tiengo","tenigo"],1,"Tener es irregular en la 1.ª persona: yo tengo.","Irregular en yo"],
+ ["Los niños ___ (dormir) ocho horas cada noche.",["dormen","duermen","durmieron","durmirán"],1,"Dormir cambia o→ue: ellos duermen.","Irregular o→ue"],
+ ["«Mi hermana trabaja en un hospital y vuelve a casa muy tarde.» ¿En qué tiempo verbal está esta oración?",["Futuro simple","Presente de indicativo","Pretérito indefinido","Presente progresivo"],1,"«Trabaja» y «vuelve» expresan una acción habitual: presente de indicativo.","Identificar"]]},
+{id:"progresivo",title:"2. Presente progresivo",sub:"Acciones que ocurren en este momento: estar + gerundio.",
+ task:{tense:"presente progresivo",topic:"un perro y un gato",verbs:["jugar","correr","dormir","comer","mirar","leer","pedir","decir","seguir","construir"]},
+ qs:[
+ ["Ahora mismo yo ___ (trabajar).",["trabajo","estoy trabajando","estoy trabajado","trabajaré"],1,"Estar (presente) + gerundio (-ando/-iendo): estoy trabajando.","Regular"],
+ ["Mis padres están ___ (dormir) en este momento.",["dormiendo","durmiendo","duermiendo","dormindo"],1,"Los verbos -ir con cambio vocálico cambian también en el gerundio: dormir → durmiendo.","Irregular"],
+ ["Tú estás ___ (leer) un libro interesante.",["leiendo","leyendo","leendo","lediendo"],1,"Cuando la raíz termina en vocal, la -i- del gerundio pasa a -y-: leer → leyendo.","Irregular"],
+ ["«Los niños están jugando en el parque ahora mismo.» ¿En qué tiempo verbal está esta oración?",["Presente progresivo","Presente de indicativo","Futuro simple","Pretérito indefinido"],0,"Estar + gerundio (están jugando) expresa una acción que ocurre en este momento.","Identificar"]]},
+{id:"indefinido",title:"3. Pretérito indefinido",sub:"Acciones terminadas en el pasado.",
+ task:{tense:"pretérito indefinido",topic:"unas vacaciones inolvidables",verbs:["viajar","llegar","ir","ver","hacer","estar","tener","decir","dormir","poder"]},
+ qs:[
+ ["Ayer ellos ___ (hablar) con el profesor.",["hablan","hablaron","hablarán","hablaban"],1,"Acción terminada en el pasado: hablar → hablaron (ellos).","Regular"],
+ ["Anoche yo ___ (hacer) la tarea.",["hací","hice","hizo","haré"],1,"Hacer es irregular en el indefinido: hice, hiciste, hizo, hicimos, hicieron.","Irregular"],
+ ["El sábado ella ___ (ir) al cine.",["iba","fue","va","irá"],1,"Ir y ser comparten el indefinido: fui, fuiste, fue, fuimos, fueron.","Irregular"],
+ ["Ellos ___ (dormir) hasta muy tarde ayer.",["dormieron","duermieron","durmieron","durmen"],2,"En 3.ª persona, los verbos -ir con cambio vocálico pasan o→u: durmieron.","Irregular"],
+ ["«Ayer mis primos llegaron a Caracas después de un viaje largo.» ¿En qué tiempo verbal está esta oración?",["Presente de indicativo","Futuro simple","Presente progresivo","Pretérito indefinido"],3,"«Llegaron» es una acción terminada en el pasado (ayer): pretérito indefinido.","Identificar"]]},
+{id:"futuro",title:"4. Futuro simple",sub:"Acciones que ocurrirán: infinitivo + é, ás, á, emos, án, con raíces irregulares.",
+ task:{tense:"futuro simple",topic:"cómo será el mundo en el año 2050",verbs:["ser","vivir","tener","poder","hacer","decir","salir","venir","saber","poner"]},
+ qs:[
+ ["El año próximo yo ___ (viajar) a España.",["viajé","viajo","viajaré","viajando"],2,"Futuro regular: infinitivo + é, ás, á, emos, án → viajaré.","Regular"],
+ ["Mañana nosotros ___ (tener) examen.",["tenderemos","tendremos","tenemos","tuvimos"],1,"Tener tiene raíz irregular en futuro: tendré, tendrás, tendrá, tendremos, tendrán.","Irregular"],
+ ["Ellos nos ___ (decir) la verdad pronto.",["decirán","dirán","dijeron","dicen"],1,"Decir → dir-: diré, dirás, dirá, diremos, dirán.","Irregular"],
+ ["«El próximo verano visitaremos a nuestros abuelos en Mérida.» ¿En qué tiempo verbal está esta oración?",["Pretérito indefinido","Presente progresivo","Futuro simple","Presente de indicativo"],2,"«Visitaremos» = infinitivo + -emos: futuro simple.","Identificar"]]},
+{id:"otras",title:"5. Otras formas de futuro",sub:"Mañana + presente, ir a + infinitivo y pensar + infinitivo.",
+ task:{tense:"otras formas de futuro (mañana + presente, ir a + infinitivo y pensar + infinitivo)",topic:"tus planes para el fin de semana",verbs:["mañana voy…","mañana salgo…","mañana pienso + infinitivo","voy a + infinitivo","vamos a + infinitivo","pienso + infinitivo"]},
+ qs:[
+ ["¿Cuál de estas oraciones expresa un plan futuro usando el presente?",["Ayer salí con mis amigos.","Mañana salgo con mis amigos.","Estoy saliendo con mis amigos.","Salía con mis amigos."],1,"El presente + una expresión de tiempo futuro (mañana) indica un plan casi seguro: Mañana salgo.","Mañana + presente"],
+ ["Completa: Mañana ___ al médico.",["fui","iba","voy","yendo"],2,"Mañana voy al médico: presente de ir con valor de futuro.","Mañana voy"],
+ ["Completa: Mañana ___ a visitar a mi tía.",["voy","fui","iré","estoy"],0,"Ir a + infinitivo: Mañana voy a visitar a mi tía (futuro próximo).","Ir a + infinitivo"],
+ ["En «Mañana pienso estudiar toda la tarde», pensar + infinitivo expresa…",["una acción que ocurre ahora","una acción terminada en el pasado","una intención o plan futuro","una costumbre"],2,"Pensar + infinitivo expresa intención o plan para el futuro: pienso estudiar = tengo la intención de estudiar.","Mañana pienso"],
+ ["«Mañana pienso viajar a la playa con mis amigos.» ¿Qué forma de futuro se usa?",["Futuro simple","Ir a + infinitivo","Presente con «mañana»","Pensar + infinitivo"],3,"«Pienso viajar» expresa una intención futura con pensar + infinitivo.","Identificar"]]}
+];
+
+var root=document.getElementById("root"),toc=document.getElementById("toc");
+var total=0,answered=0,correct=0,per={},texts={};
+try{var sv=localStorage.getItem("examen-textos");if(sv)texts=JSON.parse(sv)||{}}catch(e){texts={}}
+function save(){try{localStorage.setItem("examen-textos",JSON.stringify(texts))}catch(e){}}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+
+function buildTask(s){
+  var t=s.task,box=el("div","task");
+  box.appendChild(el("h3",null,"Ejercicio de escritura"));
+  box.appendChild(el("p","cons","Escribe una historia corta en <b>"+esc(t.tense)+"</b> sobre <b>"+esc(t.topic)+"</b>. Debe tener al menos 3 párrafos. Puedes usar los verbos que quieras."));
+  if(IMG[s.id])box.appendChild(el("div","pic",IMG[s.id]));
+  var ta=el("textarea");ta.id="txt-"+s.id;ta.value=texts[s.id]||"";
+  ta.setAttribute("aria-label","Tu historia en "+t.tense);
+  ta.placeholder="Escribe aquí tu historia. Separa los párrafos con un salto de línea.";
+  box.appendChild(ta);
+  var tools=el("div","tools"),cnt=el("span","count");
+  var cp=el("button","copy","Copiar mi historia");cp.type="button";
+  tools.appendChild(cnt);tools.appendChild(cp);box.appendChild(tools);
+  function upd(){
+    var v=ta.value,ps=v.split(/\n+/).filter(function(x){return x.trim().length>0}).length;
+    var w=(v.trim().match(/\S+/g)||[]).length;
+    cnt.innerHTML=w+" palabras · "+(ps>=3?'<span class="okc">'+ps+" párrafos ✓</span>":ps+" / 3 párrafos");
+  }
+  ta.addEventListener("input",function(){texts[s.id]=ta.value;save();upd()});
+  cp.addEventListener("click",function(){
+    var done=function(){cp.textContent="Copiado";setTimeout(function(){cp.textContent="Copiar mi historia"},1600)};
+    try{navigator.clipboard.writeText(ta.value).then(done,function(){ta.select();cp.textContent="Selecciona y copia (Ctrl+C)"})}catch(e){ta.select();cp.textContent="Selecciona y copia (Ctrl+C)"}
+  });
+  box.appendChild(el("p","note","Este ejercicio no se corrige automáticamente ni cuenta en la nota. Cópialo y entrégalo a tu profesor para que lo revise."));
+  upd();return box;
+}
+
+function build(){
+  root.innerHTML="";toc.innerHTML="";total=0;answered=0;correct=0;per={};log=[];
+  S.forEach(function(s){total+=s.qs.length;per[s.id]={t:s.qs.length,c:0}});
+  var n=0;
+  S.forEach(function(s){
+    var a=el("a",null,s.title.replace(/^\d+\.\s*/,""));a.href="#"+s.id;toc.appendChild(a);
+    var sec=el("section","blk");sec.id=s.id;
+    sec.appendChild(el("h2",null,s.title));sec.appendChild(el("p","sub",s.sub));
+    sec.appendChild(buildTask(s));
+    s.qs.forEach(function(q){
+      n++;var num=n;
+      var order=shuffle(q[1].map(function(t,i){return {t:t,ok:i===q[2]}}));
+      var card=el("div","q");
+      var meta=el("div","meta");meta.appendChild(el("span",null,"Pregunta "+n));
+      meta.appendChild(el("span","tag"+(q[4]==="Identificar"?" id":""),esc(q[4])));
+      card.appendChild(meta);
+      if(QIMG[q[0]])card.appendChild(el("div","pic",QIMG[q[0]]));
+      card.appendChild(el("p","pr",esc(q[0])));
+      var box=el("div","opts");var fb=el("div","fb");fb.hidden=true;
+      var btns=[];
+      order.forEach(function(o){
+        var b=el("button","opt",esc(o.t));b.type="button";btns.push(b);
+        b.addEventListener("click",function(){
+          btns.forEach(function(x,i){x.disabled=true;if(order[i].ok)x.classList.add("ok")});
+          answered++;
+          log.push({n:num,block:s.title.replace(/^\d+\.\s*/,""),tag:q[4],prompt:q[0],chosen:o.t,right:q[1][q[2]],ok:o.ok});
+          if(o.ok){correct++;per[s.id].c++;fb.className="fb";fb.innerHTML="<strong>Correcto.</strong> "+esc(q[3])}
+          else{b.classList.add("bad");fb.className="fb no";fb.innerHTML="<strong>Incorrecto.</strong> "+esc(q[3])}
+          fb.hidden=false;update();
+        });
+        box.appendChild(b);
+      });
+      card.appendChild(box);card.appendChild(fb);sec.appendChild(card);
+    });
+    root.appendChild(sec);
+  });
+  update();
+}
+function update0(){
+  document.getElementById("stats").textContent=answered+" / "+total+" respondidas · "+correct+" correctas";
+  document.getElementById("pbar").style.width=(total?answered/total*100:0)+"%";
+  var r=document.getElementById("result");
+  if(answered===total){
+    r.hidden=false;
+    document.getElementById("score").textContent=correct+" / "+total;
+    var pct=correct/total;
+    document.getElementById("scoremsg").textContent=pct>=0.9?"Excelente dominio de los tiempos verbales.":pct>=0.7?"Buen resultado. Repasa los bloques con menos aciertos.":pct>=0.5?"Vas por buen camino. Repasa los tiempos y vuelve a intentarlo.":"Conviene repasar los cuatro tiempos y las formas de futuro antes de repetir.";
+    var bd=document.getElementById("bd");bd.innerHTML="";
+    S.forEach(function(s){bd.appendChild(el("span",null,esc(s.title.replace(/^\d+\.\s*/,""))+": "+per[s.id].c+"/"+per[s.id].t))});
+  } else r.hidden=true;
+}
+document.getElementById("reset").addEventListener("click",function(){build();window.scrollTo(0,0)});
+var log=[];
+var DB=null,UID=null,DL=null;
+var $=function(id){return document.getElementById(id)};
+function pts(){return total?Math.round(correct*100/total):0}
+function nombre(){return ($("alumno").value||"").trim()}
+function sorted(){return log.slice().sort(function(a,b){return a.n-b.n})}
+function report(){
+  var p=pts(),L=[];
+  L.push("INFORME DEL EXAMEN DE TIEMPOS VERBALES");
+  L.push("Alumno: "+(nombre()||"(sin nombre)"));
+  L.push("Fecha: "+new Date().toLocaleString("es-VE"));
+  L.push("Nota: "+p+" / 100 - "+(p>=70?"APROBADO":"REPROBADO")+" (se aprueba con 70)");
+  L.push("Aciertos: "+correct+" de "+total);
+  L.push("");L.push("POR BLOQUE");
+  S.forEach(function(s){L.push(s.title.replace(/^\d+\.\s*/,"")+": "+per[s.id].c+" / "+per[s.id].t)});
+  L.push("");L.push("PREGUNTAS");
+  sorted().forEach(function(r){L.push((r.ok?"[ACIERTO] ":"[ERROR] ")+r.n+". ("+r.block+") "+r.prompt+" | Respondio: "+r.chosen+(r.ok?"":" | Correcta: "+r.right))});
+  L.push("");L.push("HISTORIAS (para revision del profesor)");
+  S.forEach(function(s){L.push("");L.push(s.title+" - "+s.task.tense+" sobre "+s.task.topic);L.push(texts[s.id]||"(no escribio nada)")});
+  return L.join("\n");
+}
+function summary(){
+  var p=pts(),L=["Examen de tiempos verbales","Alumno: "+(nombre()||"(sin nombre)"),"Nota: "+p+"/100 - "+(p>=70?"APROBADO":"REPROBADO")+" (aprueba con 70)","Aciertos: "+correct+" de "+total];
+  var bad=sorted().filter(function(r){return !r.ok});
+  if(bad.length){L.push("","Errores:");bad.forEach(function(r){L.push(r.n+". "+r.prompt+" -> "+r.chosen+" (correcta: "+r.right+")")})}
+  return L.join("\n");
+}
+function update(){
+  update0();
+  if(!total||answered!==total)return;
+  var p=pts(),ok=p>=70;
+  $("score").textContent=p+" / 100";
+  var v=$("verdict");v.textContent=ok?"APROBADO":"REPROBADO";v.className="verdict "+(ok?"pass":"fail");
+  $("scoremsg").textContent=ok?"Superaste el mínimo de 70 puntos con "+correct+" aciertos de "+total+".":"El mínimo para aprobar es 70 puntos. Tienes "+correct+" aciertos de "+total+". Repasa los errores y vuelve a intentarlo.";
+  var rev=$("rev");rev.innerHTML="";
+  var bad=sorted().filter(function(r){return !r.ok});
+  if(bad.length){
+    rev.appendChild(el("h3",null,"Preguntas para repasar"));
+    bad.forEach(function(r){rev.appendChild(el("p",null,"<b>"+r.n+".</b> "+esc(r.prompt)+"<br>Tu respuesta: "+esc(r.chosen)+" · Correcta: <b>"+esc(r.right)+"</b>"))});
+  } else rev.appendChild(el("p",null,"No tuviste errores."));
+}
+function flash(b,t){var o=b.textContent;b.textContent=t;setTimeout(function(){b.textContent=o},1800)}
+function showBox(t){var ta=$("repbox");ta.hidden=false;ta.value=t;ta.focus();ta.select()}
+$("alumno").value="";
+try{var nm=localStorage.getItem("examen-nombre");if(nm)$("alumno").value=nm}catch(e){}
+$("alumno").addEventListener("input",function(){try{localStorage.setItem("examen-nombre",$("alumno").value)}catch(e){}});
+$("copyrep").addEventListener("click",function(){
+  var b=this,t=report();
+  try{navigator.clipboard.writeText(t).then(function(){flash(b,"Informe copiado")},function(){showBox(t)})}catch(e){showBox(t)}
+});
+$("wa").addEventListener("click",function(){this.href="https://wa.me/?text="+encodeURIComponent(summary())});
+$("dl").addEventListener("click",function(){
+  if(!DL)return;
+  var n=(nombre()||"alumno").replace(/[^A-Za-z0-9]+/g,"-");
+  DL.save({filename:"examen-"+n+".txt",data:report()}).catch(function(){});
+});
+$("send").addEventListener("click",async function(){
+  var m=$("sendmsg"),b=this;
+  if(!nombre()){m.textContent="Escribe tu nombre al inicio de la página y vuelve a enviar.";return}
+  if(!DB||!UID){m.textContent="Aquí no se puede enviar automáticamente. Usa WhatsApp o copia el informe.";return}
+  b.disabled=true;m.textContent="Enviando…";
+  try{
+    await DB.doc("submissions/"+UID).set({
+      name:nombre(),pts:pts(),correct:correct,total:total,pass:pts()>=70,at:new Date().toISOString(),
+      blocks:S.map(function(s){return {t:s.title.replace(/^\d+\.\s*/,""),c:per[s.id].c,n:per[s.id].t}}),
+      answers:sorted(),
+      stories:S.map(function(s){return {t:s.title,tense:s.task.tense,topic:s.task.topic,text:texts[s.id]||""}})
+    });
+    m.textContent="Resultado enviado al profesor.";
+  }catch(e){m.textContent="No se pudo enviar desde aquí. Usa WhatsApp o copia el informe y envíaselo a tu profesor."}
+  b.disabled=false;
+});
+function teacher(){
+  var sec=$("teacher"),list=$("tlist"),sum=$("tsum");
+  sec.hidden=false;
+  var timer=setTimeout(function(){sum.textContent="Las entregas tardan en cargar."},10000);
+  DB.collection("submissions").orderBy("at","desc").onSnapshot(function(snap){
+    clearTimeout(timer);
+    var docs=snap.docs.map(function(d){return d.data()});
+    list.innerHTML="";
+    if(!docs.length){sum.textContent="Aún no hay entregas enviadas desde la página.";return}
+    var tot=0,ap=0;docs.forEach(function(x){tot+=x.pts||0;if(x.pass)ap++});
+    sum.textContent=docs.length+" entregas · promedio "+Math.round(tot/docs.length)+" / 100 · aprobados "+ap;
+    docs.forEach(function(x){
+      var d=el("details","sub-item");
+      d.appendChild(el("summary",null,'<span>'+esc(x.name||"Sin nombre")+'</span><span class="pt">'+(x.pts||0)+' / 100</span><span class="vd '+(x.pass?"pass":"fail")+'">'+(x.pass?"Aprobado":"Reprobado")+'</span>'));
+      var h='<p class="meta2">'+esc(new Date(x.at).toLocaleString("es-VE"))+' · '+(x.correct||0)+' aciertos de '+(x.total||0)+'</p>';
+      h+='<p class="meta2">'+(x.blocks||[]).map(function(b){return esc(b.t)+" "+b.c+"/"+b.n}).join(" · ")+'</p>';
+      h+='<div class="ans">'+(x.answers||[]).map(function(a){return '<div class="'+(a.ok?"ok":"bad")+'"><b>'+(a.ok?"Acierto":"Error")+'</b> · '+esc(a.n)+'. '+esc(a.prompt)+'<br>Respondió: '+esc(a.chosen)+(a.ok?"":' · Correcta: <b>'+esc(a.right)+'</b>')+'</div>'}).join("")+'</div>';
+      h+=(x.stories||[]).map(function(t){return '<p class="meta2"><b>'+esc(t.t)+'</b> · '+esc(t.tense)+' sobre '+esc(t.topic)+'</p><div class="txt">'+esc(t.text||"(no escribió nada)")+'</div>'}).join("");
+      var body=el("div",null,h);d.appendChild(body);list.appendChild(d);
+    });
+  },function(){clearTimeout(timer);sum.textContent="No se pudieron cargar las entregas."});
+}
+(async function(){
+  try{
+    if(!(window.claude&&window.claude.use))return;
+    var u=await claude.use("user");
+    UID=u?await u.id():null;
+    DB=await claude.use("db");
+    DL=await claude.use("downloads");
+    if(DB&&UID)$("send").hidden=false;
+    if(DL)$("dl").hidden=false;
+    if(DB&&u&&await u.canEdit())teacher();
+  }catch(e){}
+})();
+build();
+</script>
+
+</html>
